@@ -1,0 +1,1590 @@
+  try {
+    sapFormHtml = `
+      <!DOCTYPE html>
+        <html>
+        <head>
+          <title>ABC</title>
+          <style type="text/css" ></style>
+          <style >
+            .padding{
+              //padding-left: px;
+              font-weight: bold;
+              margin-left: 40px;
+              margin-right: 40px;
+
+            }
+            .saplabel{
+              padding-left: 30px;
+              font-weight: normal;
+              font-size: 8px;
+            }
+            .sapinput{
+              padding: 6px 12px;
+              position: relative;
+              top: 15px;
+              margin-left: 20px
+
+            }
+            table tr td{
+              padding:5px;
+              font-size: 10px;
+            }
+            table, th ,td{
+              border:1px solid black;
+              border-collapse: collapse;
+            }
+          </style>
+        </head>
+        <body>
+        <div >
+          <center >
+                <b style="font-size: 11px">SAP FORM</b>
+          </center>
+        </div>
+        </br>
+        <div class="padding" >
+            <table style="width:100%">
+              <tr>
+                <td colspan="3"> 
+                  <label  class="saplabel" >Date Of Joining: `+moment.tz(candidate.doj,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                </td> 
+               
+              </tr>
+            </table>
+        </div><br>
+        <div class="padding">
+            <table style="width:100%">
+             <tr>
+                <td colspan="3">Personal Details</td>
+             </tr>
+              <tr>`
+              if(!(_.isNil(candidate.salutation)) && typeof candidate.salutation == 'object') {
+                sapFormHtml += `
+                <td>
+                  <label  class="saplabel" >Mr/Ms/Dr: `+candidate.salutation.salutation+`</label>  
+                </td>`
+              }
+              else {
+                sapFormHtml += `
+                <td>
+                  <label  class="saplabel" >Mr/Ms/Dr: #NA</label>  
+                </td>`
+              }
+              sapFormHtml +=`
+                <td colspan="2">
+                  <label  class="saplabel" >Email ID: `+candidate.emailId+`</label>
+                </td> 
+              </tr>
+              <tr>
+                <td>
+                  <label  class="saplabel" >First Name: `+candidate.firstName+`</label>
+                </td> 
+                <td>
+                  <label  class="saplabel" >Middle Name: `+candidate.middleName+`</label>
+                </td> 
+                <td>
+                  <label  class="saplabel" >Last Name: `+candidate.lastName+`</label>
+                </td> 
+              </tr>
+              <tr>
+                <td>
+                  <label  class="saplabel" >Date Of Birth: `+moment.tz(candidate.dob,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                  
+                </td> 
+                <td>
+                  <label  class="saplabel" >Country Of Birth: `+candidate.country.countryName+`</label>
+                  
+                </td> 
+                <td>
+                  <label  class="saplabel" >State Of Birth: `+candidate.state.state+`</label>
+                </td> 
+              </tr>
+              <tr>
+                <td>
+                  <label  class="saplabel" >Place Of Birth: `+candidate.placeOfBirth+`</label>
+                  
+                </td> 
+                <td>
+                  <label  class="saplabel" >Nationality: `+candidate.nationality.nationality+`</label>
+                  
+                </td> 
+                <td>
+                  <label  class="saplabel" >Religion: `+candidate.religion.religion+`</label>
+                  
+                </td> 
+              </tr>
+              <tr>
+                <td>
+                  <label  class="saplabel" >Marital Status: `+candidate.maritalStatus.maritalStatus+`</label>
+                  
+                </td>`
+                if(!(_.isNil(candidate.dateOfMarriage))) {
+                  sapFormHtml += `
+                    <td>
+                      <label  class="saplabel" >Date Of Marriage: `+moment.tz(candidate.dateOfMarriage,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                  </td>`
+                } 
+                else {
+                  sapFormHtml += `
+                    <td>
+                      <label  class="saplabel" >Date Of Marriage: #NA</label>
+                  </td>`
+                }
+                if(!(_.isNil(candidate.noOfChildren))) {
+                  sapFormHtml += `
+                    <td>
+                        <label  class="saplabel" >Number Of Child: `+candidate.noOfChildren+`</label>
+                    </td>`
+                }
+                else if(candidate.noOfChildren == "") {
+                  sapFormHtml += `
+                    <td>
+                        <label  class="saplabel" >Number Of Child: 0</label>
+                    </td>`
+                }
+                else {
+                  sapFormHtml += `
+                    <td>
+                        <label  class="saplabel" >Number Of Child: #NA</label>
+                    </td>`
+                }
+                sapFormHtml += `
+                  </tr>
+                  <tr>
+                    <td>
+                      <label  class="saplabel" >Gender: `+candidate.gender+`</label>
+                      
+                    </td> 
+                    <td>
+                      <label  class="saplabel" >Father Name: `+candidate.fathersName+`</label>
+                      
+                    </td>`
+                 if(!(_.isNil(candidate.otherDetails.motherTongue))) {
+                  sapFormHtml += `
+                    <td>
+                      <label  class="saplabel" >Mother Tongue: `+candidate.otherDetails.motherTongue+`</label>
+                    </td>`
+                 }
+                 else {
+                  sapFormHtml += `
+                    <td>
+                      <label  class="saplabel" >Mother Tongue: #NA</label>
+                    </td>`
+                 }
+                 sapFormHtml += `
+                  </tr>
+                  </table>
+                  </div><br>
+                  <div class="padding"  >
+                      <table style="width:100%">
+                      <tr>
+                          <td colspan="3">Permanent Address</td>
+                       </tr>
+                        <tr>`
+                        if(!(_.isNil(candidate.address[0].co))){
+                          sapFormHtml +=`
+                            <td>
+                            <label  class="saplabel" >C/O: `+candidate.address[0].co+`</label>
+                          </td>`
+                        }
+                        else {
+                          sapFormHtml +=`
+                            <td>
+                            <label  class="saplabel" >C/O: #NA</label>
+                          </td>`
+                        }
+                        sapFormHtml +=`
+                          <td>
+                            <label  class="saplabel" >Street & House No: `+candidate.address[0].street+`</label>
+                            
+                          </td> 
+                          <td>
+                            <label  class="saplabel" >Lane/Area: `+candidate.address[0].lane+`</label>
+                          </td> 
+                        </tr>
+                        <tr>  
+                          <td>
+                            <label  class="saplabel" >Country: `+candidate.address[0].country.countryName+`</label>
+                            
+                          </td> 
+                          <td>
+                            <label  class="saplabel" >State: `+candidate.address[0].state.state+`</label>
+                            
+                          </td> 
+                          <td>
+                            <label  class="saplabel" >City: `+candidate.address[0].city+`</label>
+                          </td> 
+                        </tr>
+                        <tr>`
+                        if(!(_.isNil(candidate.address[0].district))) {
+                          sapFormHtml += `
+                          <td>
+                            <label  class="saplabel" >District: `+candidate.address[0].district+`</label>
+                          </td>`
+                        }
+                        else {
+                          sapFormHtml += `
+                          <td>
+                            <label  class="saplabel" >District: #NA</label>
+                          </td>`
+                        }
+                        sapFormHtml +=`
+                          <td>
+                            <label  class="saplabel" >Pincode: `+candidate.address[0].pincode+`</label>
+                          </td>`
+                        if(!(_.isNil(candidate.address[0].phone))){
+                          sapFormHtml +=`
+                            <td>
+                              <label  class="saplabel" >Phone No: `+candidate.address[0].phone+`</label>
+                          </td>` 
+                        }
+                        else {
+                          sapFormHtml +=`
+                            <td>
+                              <label  class="saplabel" >Phone No: #NA</label>
+                          </td>`
+                        }
+                        sapFormHtml +=`
+                          </tr>
+                          <tr>`
+                          if(!(_.isNil(candidate.address[0].from))) {
+                            sapFormHtml += `
+                            <td>
+                              <label  class="saplabel" >From: `+moment.tz(candidate.address[0].from,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                            </td>` 
+                          }
+                          else {
+                            sapFormHtml += `
+                            <td>
+                              <label  class="saplabel" >From: #NA</label>
+                            </td>`                            
+                          }                          
+                          if(!(_.isNil(candidate.address[0].to))) {
+                            sapFormHtml += `
+                            <td colspan="2">
+                              <label  class="saplabel" >To: `+moment.tz(candidate.address[0].to,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                            </td>` 
+                          }
+                          else {
+                            sapFormHtml += `
+                            <td colspan="2">
+                              <label  class="saplabel" >To: #NA</label>
+                            </td>` 
+                          }
+                          sapFormHtml += `
+                            </tr>
+                            <tr>
+                              <td colspan="3">
+                                <label  class="saplabel" >Nature Of Location: `+candidate.address[0].natureOfLocation+`</label>
+                              </td> `
+                            sapFormHtml +=`
+                            </tr>
+                          </table>
+                      </div><br>
+                      <div class="padding" style="page-break-after:always;">
+                          <table style="width:100%">
+                          <tr>
+                              <td colspan="3">Current Address</td>
+                           </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.address[1].co))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >C/O: <co></label>
+                                
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >C/O: <co></label>
+                                
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Street & House No: `+candidate.address[1].street+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >Lane/Area: `+candidate.address[1].lane+`</label>
+                              </td> 
+                            </tr>
+                            <tr>  
+                              <td>
+                                <label  class="saplabel" >Country: `+candidate.address[1].country.countryName+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >State: `+candidate.address[1].state.state+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >City: `+candidate.address[1].city+`</label>
+                              </td> 
+                            </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.address[1].district))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >District: `+candidate.address[1].district+`</label>
+                                
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >District: #NA</label>
+                                
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Pincode: `+candidate.address[1].pincode+`</label>
+                              </td> `
+                            if(!(_.isNil(candidate.address[1].phone))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Phone No: <phone></label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Phone No: <phone></label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                            </tr>
+                            <tr>
+                            `
+                            if(!(_.isNil(candidate.address[1].from))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >From: `+moment.tz(candidate.address[1].from,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >From: #NA</label>
+                              </td>`                              
+                            }                            
+                            if(!(_.isNil(candidate.address[1].to))) {
+                              sapFormHtml += `
+                              <td colspan="2">
+                                <label  class="saplabel" >To: `+moment.tz(candidate.address[1].to,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td colspan="2">
+                                <label  class="saplabel" >To: #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                            </tr>
+                            <tr>
+                              <td colspan="3">
+                                <label  class="saplabel" >Nature Of Location: `+candidate.address[1].natureOfLocation+`</label>
+                              </td> 
+                            </tr>
+                          </table>
+                      </div><br>
+                      <div class="padding">
+                          <table style="width:100%">
+                          <tr>
+                              <td colspan="3">Emergency Address</td>
+                           </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.address[2].co))){
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >C/O: `+candidate.address[2].co+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >C/O: #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Street & House No: `+candidate.address[2].street+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >Lane/Area: `+candidate.address[2].lane+`</label>
+                                
+                              </td> 
+                            </tr>
+                            <tr>  
+                              <td>
+                                <label  class="saplabel" >Country: `+candidate.address[2].country.countryName+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >State: `+candidate.address[2].state.state+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >City: `+candidate.address[2].city+`</label>
+                                
+                              </td> 
+                            </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.address[2].district))) {
+                              sapFormHtml += `
+                             <td>
+                                <label  class="saplabel" >District: `+candidate.address[2].district+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                             <td>
+                                <label  class="saplabel" >District: #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Pincode: `+candidate.address[2].pincode+`</label>
+                              </td>`
+                            if(!(_.isNil(candidate.address[2].phone))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Phone No: `+candidate.address[2].phone+`</label>
+                              </td>` 
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Phone No: #NA</label>
+                              </td>` 
+                            }
+                            sapFormHtml +=`
+                            </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.address[2].from))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >From: `+moment.tz(candidate.address[2].from,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >From: #NA</label>
+                              </td>`                              
+                            }                            
+                            if(!(_.isNil(candidate.address[2].to))) {
+                              sapFormHtml +=`
+                              <td colspan="2">
+                                <label  class="saplabel" >To: `+moment.tz(candidate.address[2].to,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td colspan="2">
+                                <label  class="saplabel" >To: #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                            </tr>
+                            <tr>
+                              <td colspan="3">
+                                <label  class="saplabel" >Nature Of Location: `+candidate.address[2].natureOfLocation+`</label>
+                              </td> 
+                            </tr>
+                          </table>
+                      </div><br>
+                      <div class="padding" style="page-break-after:always;">
+                          <table style="width:100%">
+                          <tr>
+                              <td colspan="3">Personal ID's</td>
+                           </tr>
+                            
+                            <tr>`
+                            if(!(_.isNil(candidate.pan))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >PAN No: `+candidate.pan+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >PAN No: #NA</label>
+                              </td>`                              
+                            }                            
+                            if(!(_.isNil(candidate.aadhar))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Aadhar No: `+candidate.aadhar+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Aadhar No: #NA</label>
+                              </td>`                              
+                            }                            
+                            if(!(_.isNil(candidate.passport))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Passport: `+candidate.passport+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Passport: #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                            </tr>
+                            <tr>`
+
+                            if(!(_.isNil(candidate.uan))) {
+                              sapFormHtml +=`
+                              <td colspan="3">
+                                <label  class="saplabel" >UAN: `+candidate.uan+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td colspan="3">
+                                <label  class="saplabel" >UAN: #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                            </tr>
+                          </table>
+                      </div><br>
+                      <!-- qualification repeat -->
+                      <div class="padding" style="page-break-after:always;">`
+                      if(!(_.isNil(candidate.qualification)) && _.isArray(candidate.qualification)){
+                        for(let i=0;i<candidate.qualification.length;i++) {
+                          if(_.isNil(candidate.qualification[i].otherBoard)
+                            && _.isNil(candidate.qualification[i].otherDegree)
+                            && _.isNil(candidate.qualification[i].otherSpecialization)
+                            && _.isNil(candidate.qualification[i].otherInstitution)
+                            && _.isNil(candidate.qualification[i].otherType)
+                            && _.isNil(candidate.qualification[i].otherCourseType)) {
+                            sapFormHtml+=`
+                                  <table style="width:100%">
+                                    <tr>
+                                      <td colspan="3">Qualification</td>
+                                   </tr>
+                                    <tr>`
+                                    if(!(_.isNil(candidate.qualification[i].type))) {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Type: `+candidate.qualification[i].type+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Type: #NA</label>
+                                      </td>`
+                                    }
+                                    sapFormHtml +=`
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Country: `+candidate.qualification[i].country.countryName+`</label>
+                                      </td> 
+                                    </tr>
+                                    <tr>`
+                                    if(!(_.isNil(candidate.qualification[i].courseType))) {
+                                      sapFormHtml += `
+                                        <td>
+                                        <label  class="saplabel" >Course Type: `+candidate.qualification[i].courseType+`</label>
+                                      </td>` 
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                        <td>
+                                        <label  class="saplabel" >Course Type: #NA</label>
+                                      </td>` 
+                                    }
+                                    sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >University/Board: `+candidate.qualification[i].board.university+`</label>
+                                        
+                                      </td> 
+                                      <td>
+                                        <label  class="saplabel" >Degree/Certificate: `+candidate.qualification[i].degree.certificate+`</label>
+                                      </td> 
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <label  class="saplabel" >Specilization: `+candidate.qualification[i].specialization.branch+`</label>
+                                        
+                                      </td> 
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Institution: `+candidate.qualification[i].institution+`</label>
+                                      </td> 
+                                    </tr>
+                                    <tr>`
+                                    if(!(_.isNil(candidate.qualification[i].from))) {
+                                      sapFormHtml +=`
+                                        <td>
+                                        <label  class="saplabel" >From: `+moment.tz(candidate.qualification[i].from,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                        <td>
+                                        <label  class="saplabel" >From: #NA</label>
+                                      </td>`
+                                    }                                    
+                                    if(!(_.isNil(candidate.qualification[i].to))) {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >To: `+moment.tz(candidate.qualification[i].to,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >To: #NA</label>
+                                      </td>`
+                                    }                                    
+                                    if(!(_.isNil(candidate.qualification[i].cgpa))) {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >CGPA%: `+candidate.qualification[i].cgpa+`</label>
+                                      </td>` 
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >CGPA%: #NA</label>
+                                      </td>` 
+                                    }
+                                    sapFormHtml +=`
+                                     </tr>
+                                      <tr>`                                    
+
+                                    if(!(_.isNil(candidate.qualification[i].rollNumber))) {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >Roll No: `+candidate.qualification[i].rollNumber+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >Roll No: #NA</label>
+                                      </td>`
+                                    }                                    
+                                    if(!(_.isNil(candidate.qualification[i].durationOfCourse))) {
+                                      sapFormHtml +=`
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Duration Of Course: `+candidate.qualification[i].durationOfCourse+" "+candidate.qualification[i].durationOfCourseOption+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Duration Of Course: #NA</label>
+                                      </td>`
+                                    }
+                                    sapFormHtml += `
+                                    </tr>
+                                    <tr>`                                    
+                                    if(!(_.isNil(candidate.qualification[i].reasonForGapInEducation))) {
+                                      sapFormHtml +=`
+                                      <td colspan="3">
+                                        <label  class="saplabel" >Reason For break in Education: `+candidate.qualification[i].reasonForGapInEducation+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td colspan="3">
+                                        <label  class="saplabel" >Reason For break in Education: #NA</label>
+                                      </td>`
+                                    }
+                                    sapFormHtml += `
+                                          </tr>
+                                        </table><br>`
+                          }
+                          else {
+                            sapFormHtml += `
+                                  <table style="width:100%">
+                                    <tr>
+                                      <td colspan="3">Qualification</td>
+                                   </tr>
+                                    <tr>
+                                      <td>
+                                        <label  class="saplabel" >Type: `+candidate.qualification[i].otherType+`</label>
+                                        
+                                      </td> 
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Country: `+candidate.qualification[i].country.countryName+`</label>
+                                        
+                                      </td> 
+                                    </tr>
+                                    <tr>  
+                                      <td>
+                                        <label  class="saplabel" >Course Type: `+candidate.qualification[i].otherCourseType+`</label>
+                                        
+                                      </td> 
+                                      <td>
+                                        <label  class="saplabel" >University/Board: `+candidate.qualification[i].otherBoard+`</label>
+                                        
+                                      </td> 
+                                      <td>
+                                        <label  class="saplabel" >Degree/Certificate: `+candidate.qualification[i].otherDegree+`</label>
+                                        
+                                      </td> 
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <label  class="saplabel" >Specilization: `+candidate.qualification[i].otherSpecialization+`</label>
+                                        
+                                      </td> 
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Institution: `+candidate.qualification[i].otherInstitution+`</label>
+                                        
+                                      </td> 
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <label  class="saplabel" >From: `+moment.tz(candidate.qualification[i].from,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                        
+                                      </td> 
+                                      <td>
+                                        <label  class="saplabel" >To: `+moment.tz(candidate.qualification[i].to,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                        
+                                      </td> 
+                                       <td>
+                                        <label  class="saplabel" >CGPA%: `+candidate.qualification[i].cgpa+`</label>
+                                        
+                                      </td> 
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <label  class="saplabel" >Roll No: `+candidate.qualification[i].rollNumber+`</label>
+                                        
+                                      </td> 
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Duration Of Course: `+candidate.qualification[i].durationOfCourse+" "+candidate.qualification[i].durationOfCourseOption+`</label>
+                                        
+                                      </td> 
+                                    </tr>
+                                    <tr>
+                                      <td colspan="3">
+                                        <label  class="saplabel" >Reason For break in Education: `+candidate.qualification[i].reasonForGapInEducation+`</label>
+                                        
+                                      </td> 
+                                    </tr>
+                                  </table><br/>`
+                          }
+                        }
+                      }
+                      sapFormHtml +=`
+                              </div>
+                              <!-- qualification end-->
+                          <!-- Work experience repeat -->
+                          <div class="padding" style="page-break-after:always;">`
+                      if(!(_.isNil(candidate.employmentDetails)) && _.isArray(candidate.employmentDetails)){
+                        for(let i=0 ;i<candidate.employmentDetails.length;i++) {
+                          sapFormHtml +=`
+                              <table style="width:100%">
+                              <tr>
+                                  <td colspan="3">
+                                    Work Experience(Start with latest employer)
+                                    </td>
+                               </tr>
+                                <tr>`
+                                if(!(_.isNil(candidate.employmentDetails[i].type))) {
+                                  sapFormHtml += `
+                                  <td colspan="3">
+                                    <label  class="saplabel" >Type: `+candidate.employmentDetails[i].type+`</label>
+                                  </td>` 
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td colspan="3">
+                                    <label  class="saplabel" >Type: #NA</label>
+                                  </td>` 
+                                }
+                                sapFormHtml += `
+                               </tr>
+                                  <tr>`                                
+                                if(!(_.isNil(candidate.employmentDetails[i].name))) {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Employer Name: `+candidate.employmentDetails[i].name +`</label>
+                                  </td>` 
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Employer Name: #NA</label>
+                                  </td>` 
+                                }                                
+                                if(!(_.isNil(candidate.employmentDetails[i].jobTitle))) {
+                                  sapFormHtml += `
+                                  <td colspan="2">
+                                    <label  class="saplabel" >Job Title: `+candidate.employmentDetails[i].jobTitle+`</label>
+                                  </td>`
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td colspan="2">
+                                    <label  class="saplabel" >Job Title: #NA</label>
+                                  </td>`
+                                }
+                                sapFormHtml += `
+                                  </tr>
+                                  <tr>`                               
+                                if(!(_.isNil(candidate.employmentDetails[i].from))) {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >From: `+moment.tz(candidate.employmentDetails[i].from,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                  </td>` 
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >From: #NA</label>
+                                  </td>` 
+                                }                                
+                                if(!(_.isNil(candidate.employmentDetails[i].to))) {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >To: `+moment.tz(candidate.employmentDetails[i].to,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                  </td>` 
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >To: #NA</label>
+                                  </td>` 
+                                }                                
+
+                                if(!(_.isNil(candidate.employmentDetails[i].empId))) {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Emp ID: `+candidate.employmentDetails[i].empId+`</label>
+                                  </td>`
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Emp ID: #NA</label>
+                                  </td>`
+                                }
+                                sapFormHtml += `
+                                  </tr>
+                                  <tr>`                               
+                                if(!(_.isNil(candidate.employmentDetails[i].country)) && typeof candidate.employmentDetails[i].country) {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Country: `+candidate.employmentDetails[i].country.countryName+`</label>
+                                  </td>`
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Country: #NA</label>
+                                  </td>`
+                                }                                
+                                if(!(_.isNil(candidate.employmentDetails[i].state)) && typeof candidate.employmentDetails[i].state) {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >State: `+candidate.employmentDetails[i].state.state+`</label>
+                                  </td>` 
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >State: #NA</label>
+                                  </td>` 
+                                }                                
+                                if(!(_.isNil(candidate.employmentDetails[i].city))) {
+                                  sapFormHtml += `
+                                   <td>
+                                    <label  class="saplabel" >City: `+candidate.employmentDetails[i].city+`</label>
+                                  </td>` 
+                                }
+                                else {
+                                  sapFormHtml += `
+                                   <td>
+                                    <label  class="saplabel" >City: #NA</label>
+                                  </td>` 
+                                }
+                                sapFormHtml +=`
+                                  </tr>
+                                  <tr>`                               
+                                if(!(_.isNil(candidate.employmentDetails[i].postalCode))) {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Pin Code: `+candidate.employmentDetails[i].postalCode+`</label>
+                                  </td>`
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Pin Code: #NA</label>
+                                  </td>`
+                                }                                
+                                if(!(_.isNil(candidate.employmentDetails[i].industry)) && typeof candidate.employmentDetails[i].industry == 'object') {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Industry: `+candidate.employmentDetails[i].industry.industry+`</label>
+                                  </td>` 
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td>
+                                    <label  class="saplabel" >Industry: #NA</label>
+                                  </td>` 
+                                }                                
+                                if(!(_.isNil(candidate.employmentDetails[i].employmentStatus))) {
+                                  sapFormHtml += `
+                                   <td>
+                                    <label  class="saplabel" >Employment Status: <employmentDetailsemploymentStatus></label>
+                                  </td>`
+                                }
+                                else {
+                                  sapFormHtml += `
+                                   <td>
+                                    <label  class="saplabel" >Employment Status: #NA</label>
+                                  </td>`
+                                }
+                                sapFormHtml += `
+                                  </tr>
+                                  <tr>`                                
+                                if(!(_.isNil(candidate.employmentDetails[i].address))) {
+                                  sapFormHtml += `
+                                  <td colspan="3">
+                                    <label  class="saplabel" >Address : `+candidate.employmentDetails[i].address+`</label>
+                                  </td> `
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td colspan="3">
+                                    <label  class="saplabel" >Address : #NA</label>
+                                  </td> `
+                                }
+                                sapFormHtml += `
+                                  </tr>
+                                  <tr>`                               
+                                if(!(_.isNil(candidate.employmentDetails[i].reasonForLeaving))) {
+                                  sapFormHtml += `
+                                  <td colspan="3">
+                                    <label  class="saplabel" >Reason for leaving : `+candidate.employmentDetails[i].reasonForLeaving+`</label>
+                                  </td> `
+                                }
+                                else {
+                                  sapFormHtml += `
+                                  <td colspan="3">
+                                    <label  class="saplabel" >Reason for leaving :  #NA</label>
+                                  </td> `
+                                }
+                              sapFormHtml += `
+                                </tr>
+                              </table><br/>`
+                        }
+                        sapFormHtml +=`
+                        </div>
+                        <!-- work experience end-->`
+                      }
+                      else {
+                        sapFormHtml += `
+                            <table style="width:100%">
+                            <tr>
+                                <td colspan="3">
+                                  Work Experience(Start with latest employer)</td>
+                             </tr>
+                              
+                              <tr>
+                                <td colspan="3">
+                                  <label  class="saplabel" >Type: #NA</label>
+                                  
+                                </td> 
+                              </tr>
+                              <tr>  
+                                <td>
+                                  <label  class="saplabel" >Employer Name: #NA</label>
+                                  
+                                </td> 
+                                <td colspan="2">
+                                  <label  class="saplabel" >Job Title: #NA</label>
+                                  
+                                </td> 
+                              </tr>
+                              <tr>
+                                <td>
+                                  <label  class="saplabel" >From: #NA</label>
+                                  
+                                </td> 
+                                <td>
+                                  <label  class="saplabel" >To: #NA</label>
+                                  
+                                </td> 
+                                <td>
+                                  <label  class="saplabel" >Emp ID: #NA</label>
+                                  
+                                </td> 
+                              </tr>
+                              <tr>
+                                <td>
+                                  <label  class="saplabel" >Country: #NA</label>
+                                  
+                                </td> 
+                                <td>
+                                  <label  class="saplabel" >State: #NA</label>
+                                  
+                                </td> 
+                                 <td>
+                                  <label  class="saplabel" >City: #NA</label>
+                                  
+                                </td> 
+                              </tr>
+                              <tr>
+                                <td>
+                                  <label  class="saplabel" >Pin Code: #NA</label>
+                                  
+                                </td> 
+                                <td>
+                                  <label  class="saplabel" >Industry: #NA</label>
+                                  
+                                </td> 
+                                 <td>
+                                  <label  class="saplabel" >Employment Status: #NA</label>
+                                  
+                                </td> 
+                              </tr>
+                              <tr>
+                                <td colspan="3">
+                                  <label  class="saplabel" >Address : #NA</label>
+                                  
+                                </td> 
+                              </tr>
+                              <tr>
+                                <td colspan="3">
+                                  <label  class="saplabel" >Reason for leaving : #NA</label>
+                                </td> 
+                              </tr>
+                            </table><br>
+                        </div>
+                        <!-- work experience end-->`
+
+                      }
+                      sapFormHtml +=`
+                            <!-- familyDetails repeat-->
+                            <div class="padding" style="page-break-after:always;">`
+
+                      if(!(_.isNil(candidate.familyDetails)) && _.isArray(candidate.familyDetails)) {
+                        for(let i=0;i<candidate.familyDetails.length;i++){
+                          sapFormHtml += `
+                                <table style="width:100%">
+                                  <tr>
+                                    <td colspan="3">
+                                      Family Details
+                                    </td>
+                                  </tr>
+                                  <tr>  
+                                    <td>
+                                      <label  class="saplabel" >First Name: `+candidate.familyDetails[i].firstName+`</label>
+                                      
+                                    </td>`
+                                    if(!(_.isNil(candidate.familyDetails[i].middleName))) {
+                                      sapFormHtml += `
+                                       <td>
+                                          <label  class="saplabel" >Middle Name: `+candidate.familyDetails[i].middleName+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                       <td>
+                                          <label  class="saplabel" >Middle Name: #NA</label>
+                                      </td>`
+                                    }
+                                    sapFormHtml +=`
+                                    <td>
+                                      <label  class="saplabel" >Last Name: `+candidate.familyDetails[i].lastName+`</label>
+                                      
+                                    </td> 
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <label  class="saplabel" >Relationship: `+candidate.familyDetails[i].relation.relation+`</label>
+                                      
+                                    </td> 
+                                    <td>
+                                      <label  class="saplabel" >Gender: `+candidate.familyDetails[i].gender+`</label>
+                                    </td>`
+                                    if(!(_.isNil(candidate.familyDetails[i].dob))) {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Date Of Birth: `+moment.tz(candidate.familyDetails[i].dob,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                        
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Date Of Birth: #NA</label>
+                                        
+                                      </td>`
+                                    }
+                                    sapFormHtml +=`
+                                    </tr>
+                                    <tr>`
+                                    if(!(_.isNil(candidate.familyDetails[i].placeOfBirth))) {
+                                      sapFormHtml += `
+                                        <td>
+                                          <label  class="saplabel" >Place Of Birth: `+candidate.familyDetails[i].placeOfBirth+`</label>
+                                        </td>`                                      
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                        <td>
+                                          <label  class="saplabel" >Place Of Birth: #NA</label>
+                                        </td>` 
+                                    }
+                                    if(!(_.isNil(candidate.familyDetails[i].country)) && typeof candidate.familyDetails[i].country == 'object') {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Country of birth: `+candidate.familyDetails[i].country.countryName+`</label>
+                                      </td>` 
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Country of birth: #NA</label>
+                                      </td>`                                       
+                                    }                                    
+                                    if(!(_.isNil(candidate.familyDetails[i].nationality)) && typeof candidate.familyDetails[i].nationality == 'object') {
+                                      sapFormHtml += `
+                                     <td>
+                                      <label  class="saplabel" >Nationality: `+candidate.familyDetails[i].nationality.nationality+`</label>
+                                      </td>` 
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                     <td>
+                                      <label  class="saplabel" >Nationality: #NA</label>
+                                      </td>`                                       
+                                    }
+                                    sapFormHtml +=`
+                                      </tr>
+                                      <tr>
+                                        <td colspan="3">
+                                          <label  class="saplabel" >Dependent: `+candidate.familyDetails[i].dependent+`</label>
+                                          
+                                        </td> 
+                                      </tr>
+                                    </table><br/>`                       
+                        }
+                        sapFormHtml +=`
+                                </div>
+                                <!-- family details end-->`  
+                      }
+                      else {
+                        sapFormHtml += `
+                                <table style="width:100%">
+                                  <tr>
+                                    <td colspan="3">
+                                      Family Details
+                                    </td>
+                                  </tr>
+                                  <tr>  
+                                    <td>
+                                      <label  class="saplabel" >First Name: #NA </label>
+                                      
+                                    </td> 
+                                    <td>
+                                      <label  class="saplabel" >Middle Name: #NA</label>
+                                      
+                                    </td> 
+                                    <td>
+                                      <label  class="saplabel" >Last Name: #NA</label>
+                                      
+                                    </td> 
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <label  class="saplabel" >Relationship: #NA</label>
+                                      
+                                    </td> 
+                                    <td>
+                                      <label  class="saplabel" >Gender: #NA</label>
+                                      
+                                    </td> 
+                                    <td>
+                                      <label  class="saplabel" >Date Of Birth: #NA</label>
+                                      
+                                    </td> 
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <label  class="saplabel" >Place Of Birth: #NA</label>
+                                      
+                                    </td> 
+                                    <td>
+                                      <label  class="saplabel" >Country of birth: #NA</label>
+                                      
+                                    </td> 
+                                     <td>
+                                      <label  class="saplabel" >Nationality: #NA</label>
+                                      
+                                    </td> 
+                                  </tr>
+                                  <tr>
+                                    <td colspan="3">
+                                      <label  class="saplabel" >Dependent: #NA</label>
+                                      
+                                    </td> 
+                                  </tr>
+                                </table><br>
+                            </div>
+                            <!-- family details end-->`                         
+                      }
+                      sapFormHtml +=`
+                      <div class="padding" >
+                          <table style="width:100%">
+                            <tr>
+                              <td colspan="3">
+                                HDFC Bank Details (Note:If you don't have HDFC account leave the fields bank,it will open on DOJ)
+                              </td>
+                            </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.bankDetails.accountName))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Name As Per Bank Records: `+candidate.bankDetails.accountName+`</label>
+                              </td>`  
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Name As Per Bank Records: #NA</label>
+                              </td>` 
+                            }
+                            if(!(_.isNil(candidate.bankDetails.accountNumber))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Account number : `+candidate.bankDetails.accountNumber+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Account number : #NA</label>
+                              </td>`                              
+                            }                            
+                            if(!(_.isNil(candidate.bankDetails.branch))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Name of branch: `+candidate.bankDetails.branch+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Name of branch: #NA</label>
+                              </td>`                              
+                            }
+                            sapFormHtml += `
+                              </tr>
+                              <tr>`                            
+                            if(!(_.isNil(candidate.bankDetails.location))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Location: `+candidate.bankDetails.location+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Location: #NA</label>
+                              </td>`
+                            }                            
+                            if(!(_.isNil(candidate.bankDetails.ifscCode))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >IFSC Code: `+candidate.bankDetails.ifscCode+`</label>
+                              </td>` 
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >IFSC Code: #NA</label>
+                              </td>` 
+                            }                            
+                            if(!(_.isNil(candidate.bankDetails.regMobileNumber))) {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Reg. Mobile Number: `+candidate.bankDetails.regMobileNumber+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td>
+                                <label  class="saplabel" >Reg. Mobile Number: #NA</label>
+                              </td>`
+                           }
+                            sapFormHtml +=`
+                            </tr>
+                            <tr>`                            
+                            if(!(_.isNil(candidate.bankDetails.address))) {
+                              sapFormHtml += `
+                              <td colspan="3">
+                                <label  class="saplabel" >Address : `+candidate.bankDetails.address+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml += `
+                              <td colspan="3">
+                                <label  class="saplabel" >Address : #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml += `
+                              </tr>
+                            </table>
+                        </div><br>
+                              <!-- gratuity repeat-->
+                              <div class="padding" >`
+                        if(!(_.isNil(candidate.pfGratuityDetail)) && _.isArray(candidate.pfGratuityDetail)){
+                          for(let i=0 ; i<candidate.pfGratuityDetail.length;i++) {
+                            sapFormHtml += `
+                                  <table style="width:100%">
+                                    <tr>
+                                      <td colspan="3">
+                                        Gratuity Details
+                                      </td>
+                                    </tr>
+                                    <tr>`
+                                    if(!(_.isNil(candidate.pfGratuityDetail[i].nomineeName))) {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >Nominee Name : `+candidate.pfGratuityDetail[i].nomineeName+`</label>
+                                      </td>` 
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >Nominee Name : #NA</label>
+                                      </td>`                                       
+                                    }                                     
+                                    if(!(_.isNil(candidate.pfGratuityDetail[i].nomineeRelationship))) {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Relation with Nominee : `+candidate.pfGratuityDetail[i].nomineeRelationship+`</label>
+                                      </td>`    
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Relation with Nominee : #NA</label>
+                                      </td>`                                         
+                                    }                                     
+                                    if(!(_.isNil(candidate.pfGratuityDetail[i].address))) {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >Percentage Allocation : `+candidate.pfGratuityDetail[i].address+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td>
+                                        <label  class="saplabel" >Percentage Allocation :  #NA</label>
+                                      </td>`                                      
+                                    }
+                                    sapFormHtml += `
+                                    </tr>
+                                    <tr>`                                    
+                                    if(!(_.isNil(candidate.pfGratuityDetail[i].dob))) {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Date Of Birth: `+moment.tz(candidate.pfGratuityDetail[i].dob,'Asia/Kolkata').format('DD-MM-YYYY')+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml += `
+                                      <td>
+                                        <label  class="saplabel" >Date Of Birth: #NA</label>
+                                      </td>`                                      
+                                    }                                     
+                                    if(!(_.isNil(candidate.pfGratuityDetail[i].percentatgeAllocation))) {
+                                      sapFormHtml +=`
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Address of Nominee: `+candidate.pfGratuityDetail[i].percentatgeAllocation+`</label>
+                                      </td>`
+                                    }
+                                    else {
+                                      sapFormHtml +=`
+                                      <td colspan="2">
+                                        <label  class="saplabel" >Address of Nominee: #NA</label>
+                                      </td>`
+                                    }
+                                    sapFormHtml += `
+                                      </tr>
+                                    </table><br>`
+                          }
+                          sapFormHtml +=`
+                                </div>
+                                <!-- gratuity end-->`
+                        }
+                      sapFormHtml +=`
+                      <div class="padding" >
+                          <table style="width:100%">
+                            <tr>
+                              <td colspan="3">
+                                Communication Details
+                              </td>
+                            </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.contactDetails[1].officeNumber))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Office Number: `+candidate.contactDetails[1].officeNumber+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Office Number: #NA</label>
+                              </td>`                              
+                            }                            
+                            if(!(_.isNil(candidate.contactDetails[0].homeNumber))) {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Phone Number: `+candidate.contactDetails[0].homeNumber+`</label>
+                              </td>` 
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Phone Number: #NA</label>
+                              </td>`                               
+                            }                            
+                            if(!(_.isNil(candidate.contactDetails[2].personalNumber))) {
+                              sapFormHtml +=`
+                             <td>
+                                <label  class="saplabel" >Personal Number: `+candidate.contactDetails[2].personalNumber+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                             <td>
+                                <label  class="saplabel" >Personal Number: #NA</label>
+                              </td`
+                            }
+                      sapFormHtml +=`
+                            </tr>
+                          </table>
+                      </div><br>
+
+                      <div class="padding" style="page-break-after:always;">
+                          <table style="width:100%">
+                            <tr>
+                              <td colspan="3">
+                                Medical Details
+                              </td>
+                            </tr>
+                            <tr>`
+                            if(!(_.isNil(candidate.bloodGroup)) && typeof candidate.bloodGroup == 'object') {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Blood Group: `+candidate.bloodGroup.group+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >Blood Group: #NA</label>
+                              </td>`                              
+                            }                            
+                            if(!(_.isNil(candidate.rhFactor)) && typeof candidate.rhFactor == 'object') {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >RH Factor : `+candidate.rhFactor.rhFactor+`</label>
+                              </td>`
+                            }
+                            else {
+                              sapFormHtml +=`
+                              <td>
+                                <label  class="saplabel" >RH Factor : #NA</label>
+                              </td>`
+                            }
+                            sapFormHtml +=`
+                            </tr>
+                          </table>
+                      </div><br>
+                      <div class="padding" >
+                          <table style="width:100%">
+                            <tr>
+                              <td colspan="3">
+                                HR Section(To Be filled by HR)
+                              </td>
+                            </tr>
+                            <tr>  
+                              <td>
+                                <label  class="saplabel" >Reasons for Recruitment: `+candidate.reasonForRecruitment+`</label>
+                                
+                              </td>`
+                              if(candidate.reasonForRecruitment == 'replacement') {
+                                sapFormHtml +=`
+                              <td colspan="2">
+                                <label  class="saplabel" >If Replacement(SAP No and Name): `+candidate.incumbentName+'('+candidate.incumbentId+')'+`</label>
+                              </td>`
+                              }
+                              else {
+                                sapFormHtml +=`
+                              <td colspan="2">
+                                <label  class="saplabel" >If Replacement(SAP No and Name): #NA</label>
+                              </td>`
+                              }
+                          sapFormHtml +=`
+                            </tr>
+                            <tr>
+                              <td>
+                                <label  class="saplabel" >Personnel Area : `+candidate.personnelArea+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >Personnel Sub Area : `+candidate.personnelSubArea+`</label>
+                                
+                              </td> 
+                              <td>
+                                <label  class="saplabel" >Employee Grade : `+candidate.gradeKey+`</label>
+                                
+                              </td> 
+                            </tr>
+                            <tr>
+                              <td>
+                                <label  class="saplabel" >Payroll Area : `+candidate.payrollArea+`</label>
+                                
+                              </td> 
+                              <td colspan="2">
+                                <label  class="saplabel" >Reporting Supervisor Name & SAP No: `+candidate.reportingManager.displayName+'('+candidate.reportingManager.employeeNumber+')'+`</label>
+                                
+                              </td> 
+                            </tr>
+                            <tr>
+                              <td>
+                                <label  class="saplabel" >Corporate Function : `+candidate.corporateFunction+`</label>
+                                
+                              </td> 
+                              <td >
+                                <label  class="saplabel" >Notice Period: `+candidate.employeeNoticePeriod+`</label>
+                                
+                              </td> 
+                              <td >
+                                <label  class="saplabel" >Work Location: `+candidate.workLocation+`</label>
+                                
+                              </td> 
+                            </tr>
+                          </table>
+                      </div><br>
+        </body>
+      </html>`
+
+  }
